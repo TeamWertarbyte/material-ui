@@ -71,6 +71,12 @@ export const styles = theme => ({
     alignItems: 'inherit',
     justifyContent: 'inherit',
   },
+  /* Styles applied to the root element if `size="small"`. */
+  sizeSmall: {
+    padding: 3,
+    minWidth: 24,
+    fontSize: 18,
+  },
 });
 
 /**
@@ -78,7 +84,7 @@ export const styles = theme => ({
  * regarding the available icon options.
  */
 function IconButton(props) {
-  const { children, classes, className, color, disabled, ...other } = props;
+  const { children, classes, className, color, disabled, size, ...other } = props;
 
   return (
     <ButtonBase
@@ -87,6 +93,7 @@ function IconButton(props) {
         {
           [classes[`color${capitalize(color)}`]]: color !== 'default',
           [classes.disabled]: disabled,
+          [classes.sizeSmall]: size === 'small',
         },
         className,
       )}
@@ -147,11 +154,17 @@ IconButton.propTypes = {
    * If `true`, the ripple will be disabled.
    */
   disableRipple: PropTypes.bool,
+  /**
+   * The size of the button.
+   * `small` is equivalent to the dense button styling.
+   */
+  size: PropTypes.oneOf(['small', 'medium']),
 };
 
 IconButton.defaultProps = {
   color: 'default',
   disabled: false,
+  size: 'medium',
 };
 
 export default withStyles(styles, { name: 'MuiIconButton' })(IconButton);
